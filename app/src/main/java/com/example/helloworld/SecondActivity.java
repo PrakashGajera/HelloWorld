@@ -1,7 +1,7 @@
 package com.example.helloworld;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +19,7 @@ public class SecondActivity extends AppCompatActivity {
     private StartAppNativeAd startAppNativeAd = new StartAppNativeAd(this);
     private ImageView imgFreeApp = null;
     private TextView txtFreeApp = null;
+    //55a9a174-e7a5-468e-817c-6477db941f3d
 
     /** Native Ad Callback */
     private AdEventListener nativeAdListener = new AdEventListener() {
