@@ -1,10 +1,13 @@
 package com.example.helloworld;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -14,17 +17,21 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.startapp.android.publish.Ad;
-import com.startapp.android.publish.AdEventListener;
 import com.startapp.android.publish.StartAppAd;
 import com.startapp.android.publish.StartAppSDK;
 import com.startapp.android.publish.nativead.NativeAdDetails;
 import com.startapp.android.publish.nativead.StartAppNativeAd;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +44,23 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imgFreeApp = null;
     private TextView txtFreeApp = null;
 
-    /** Native Ad Callback */
+    InputStream in;
+    BufferedReader reader;
+    String line;
+    private File wallpaperDirectory;
+    private FileOutputStream output;
+    private int count;
+    private String filename;
+    private String laststringa;
+
+
+/*
+    */
+
+    /**
+     * Native Ad Callback
+     *//*
+
     private AdEventListener nativeAdListener = new AdEventListener() {
 
         @Override
@@ -79,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
         imgFreeApp = (ImageView) findViewById(R.id.imgFreeApp);
         txtFreeApp = (TextView) findViewById(R.id.txtFreeApp);
-        if (txtFreeApp != null) {
+        /*if (txtFreeApp != null) {
             txtFreeApp.setText("Loading Native Ad...");
-        }
+        }*/
 
         /*startAppNativeAd.loadAd(
                 new NativeAdPreferences()
@@ -108,32 +131,69 @@ public class MainActivity extends AppCompatActivity {
                         .setImageSize(NativeAdPreferences.NativeAdBitmapSize.SIZE150X150),
                 nativeAdListener);*/
 
+        AccountManager accManager = AccountManager.get(MainActivity.this);
+        Account acc[] = accManager.getAccountsByType("com.google");
+        int accCount = acc.length;
+        for (int i = 0; i < accCount; i++) {
+            //Do your task here...
+            Log.d("Account Name", acc[i].name);
+            Log.d("Account Type", acc[i].type);
+        }
 
-        btn_second= (Button) findViewById(R.id.button);
+
+        btn_second = (Button) findViewById(R.id.button);
 
         btn_second.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                takeScreenshot();
 //                new Screenshot_whatsapp().execute();
-                Log.i("TAG", "SERIAL: " + Build.SERIAL);
-                Log.i("TAG","MODEL: " + Build.MODEL);
-                Log.i("TAG","ID: " + Build.ID);
-                Log.i("TAG","Manufacture: " + Build.MANUFACTURER);
-                Log.i("TAG","brand: " + Build.BRAND);
-                Log.i("TAG","type: " + Build.TYPE);
-                Log.i("TAG","user: " + Build.USER);
-                Log.i("TAG","BASE: " + Build.VERSION_CODES.BASE);
-                Log.i("TAG","INCREMENTAL " + Build.VERSION.INCREMENTAL);
-                Log.i("TAG","SDK  " + Build.VERSION.SDK);
-                Log.i("TAG","BOARD: " + Build.BOARD);
-                Log.i("TAG","BRAND " + Build.BRAND);
-                Log.i("TAG","HOST " + Build.HOST);
-                Log.i("TAG","FINGERPRINT: "+Build.FINGERPRINT);
-                Log.i("TAG","Version Code: " + Build.VERSION.RELEASE);
+                List<File> files = getListFiles(new File(Environment.getExternalStorageDirectory(), "Fashion Ware"));
+
+
+               /* try{
+                    final InputStream file = getAssets().open("dresses.txt");
+                    reader = new BufferedReader(new InputStreamReader(file));
+                    String line = reader.readLine();
+                    while(line != null){
+                        Log.d("StackOverflow", line);
+                        line = reader.readLine();
+                    }
+                } catch(IOException ioe){
+                    ioe.printStackTrace();
+                }*/
+
+
+               /* File sdcard = Environment.getExternalStorageDirectory();
+
+//Get the text file
+                File file = new File(sdcard,"text.txt");
+
+//Read text from file
+                StringBuilder text = new StringBuilder();
+
+                try {
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    String line;
+
+                    while ((line = br.readLine()) != null) {
+                        text.append(line);
+                        Log.d("Link",line);
+                        text.append('\n');
+                    }
+                    br.close();
+                }
+                catch (IOException e) {
+                    //You'll need to add proper error handling here
+                }
+
+//Find the view by its id
+
+//Set the text
+                txtFreeApp.setText(text);*/
+
             }
         });
-
 
        /* btn_second.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,22 +202,22 @@ public class MainActivity extends AppCompatActivity {
                 startAppAd.showAd(new AdDisplayListener() {
 
                     *//**
-                     * Callback when Ad has been hidden
-                     * @param ad
-                     *//*
+         * Callback when Ad has been hidden
+         * @param ad
+         *//*
                     @Override
                     public void adHidden(Ad ad) {
 
-// Run second activity right after the ad was hidden
+                    // Run second activity right after the ad was hidden
                         Intent nextActivity = new Intent(MainActivity.this,
                                 SecondActivity.class);
                         startActivity(nextActivity);
                     }
 
                     *//**
-                     * Callback when ad has been displayed
-                     * @param ad
-                     *//*
+         * Callback when ad has been displayed
+         * @param ad
+         *//*
                     @Override
                     public void adDisplayed(Ad ad) {
 
@@ -176,11 +236,86 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
-
-
        /* StartAppAd.showAd(this);*/
         DeviceTocken = BuildConfig.FLAVOR;
 
+    }
+
+    private List<File> getListFiles(File parentDir) {
+        ArrayList<File> inFiles = new ArrayList<File>();
+        File[] files = parentDir.listFiles();
+        for (File file : files) {
+
+            if (file.isDirectory()) {
+                inFiles.addAll(getListFiles(file));
+                Log.d("Folder Name1", String.valueOf(file));
+            } else {
+                if (file.getName().endsWith(".txt")) {
+                    inFiles.add(file);
+                    Log.d("Folder Name2", String.valueOf(file));
+
+                    try {
+                        InputStream inputStream = new FileInputStream(file);
+                        reader = new BufferedReader(new InputStreamReader(inputStream));
+                        String line = reader.readLine();
+                        while (line != null) {
+                            Log.d("File Path", line);
+                            line = reader.readLine();
+
+                            try {
+
+                                filename = line.substring(line.lastIndexOf('/') + 1);
+
+                                int lastIndex = line.lastIndexOf("/");
+                                int prevIndex = line.lastIndexOf("/", lastIndex - 1);
+                                laststringa = line.substring(prevIndex + 1, lastIndex).trim();
+                                if (laststringa != null) {
+                                    Log.d("Folder Name", laststringa);
+                                } else {
+                                    Log.d("Folder Name", laststringa);
+                                }
+
+                                File dir = new File(Environment.getExternalStorageDirectory(), "Fashion Ware" + File.separator + laststringa);
+                                try {
+                                    if (dir.mkdir()) {
+                                        System.out.println("Directory created");
+
+                                    } else {
+                                        System.out.println("Directory is not created");
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                                DownloadManager mgr = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Uri downloadUri = Uri.parse(line);
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        downloadUri);
+
+                                request.setAllowedNetworkTypes(
+                                        DownloadManager.Request.NETWORK_WIFI
+                                                | DownloadManager.Request.NETWORK_MOBILE)
+                                        .setAllowedOverRoaming(false).setTitle(laststringa)
+                                        .setDescription(filename)
+                                        .setDestinationInExternalPublicDir("/Fashion Ware"+File.separator+laststringa, filename);
+
+                                mgr.enqueue(request);
+                                Log.d("Download Completed",laststringa +" "+filename);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+
+                }
+            }
+        }
+        return inFiles;
     }
 
     private void takeScreenshot() {
@@ -226,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class Screenshot_whatsapp extends AsyncTask<String,String,String> {
+    public class Screenshot_whatsapp extends AsyncTask<String, String, String> {
 
         @Override
         protected void onPreExecute() {
@@ -241,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 // image naming and path  to include sd card  appending name you choose for file
                 String mPath = Environment.getExternalStorageDirectory().toString() + "/" + "abc" + ".jpg";
-                Log.d("MPath",mPath.toString());
+                Log.d("MPath", mPath.toString());
                 // create bitmap screen capture
                 View v1 = getWindow().getDecorView().getRootView();
                 v1.setDrawingCacheEnabled(true);
@@ -269,8 +404,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-             File myimage = new File(Environment.getExternalStorageDirectory().toString()+"/"+"abc"+".jpg");
-            Log.d("PAth",myimage.toString());
+            File myimage = new File(Environment.getExternalStorageDirectory().toString() + "/" + "abc" + ".jpg");
+            Log.d("PAth", myimage.toString());
            /* Uri uri = Uri.parse(myimage.toString());
 
             Intent share = new Intent(android.content.Intent.ACTION_SEND);
@@ -301,8 +436,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void freeAppClick(View view){
-        if (nativeAd != null){
+    public void freeAppClick(View view) {
+        if (nativeAd != null) {
             nativeAd.sendClick(this);
         }
     }
@@ -310,7 +445,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        StartAppAd.onBackPressed(this);
+//        StartAppAd.onBackPressed(this);
         super.onBackPressed();
     }
 }
