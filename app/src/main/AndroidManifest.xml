@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
@@ -25,9 +25,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data android:name="com.google.android.gms.version"
+            <meta-data
+                android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />
-            <service android:name="com.appnext.appnextsdk.DownloadService"/>
+
+            <service android:name="com.appnext.appnextsdk.DownloadService" />
         </activity>
         <activity
             android:name="com.startapp.android.publish.list3d.List3DActivity"
@@ -40,7 +42,14 @@
             android:name="com.startapp.android.publish.FullScreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme" />
-        <activity android:name=".SecondActivity"></activity>
+        <activity android:name=".SecondActivity" />
+        <activity android:name=".Activity_Hindi_Status" />
+        <activity android:name=".Activity_Amzon_ads" />
+        <activity
+            android:name="com.amazon.device.ads.AdActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity android:name=".Activity_ImageDownload" />
+        <activity android:name=".Activity_gujarati"></activity>
     </application>
 
 </manifest>

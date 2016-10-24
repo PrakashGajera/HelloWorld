@@ -85,7 +85,7 @@ public class Mail extends javax.mail.Authenticator {
         if(!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")) {
             Session session = Session.getInstance(props, new javax.mail.Authenticator() {
                 protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("pnency24@gmail.com", "IlikeNency");
+                    return new PasswordAuthentication("<Email Id>", "<password>");
                 }
             });
 
